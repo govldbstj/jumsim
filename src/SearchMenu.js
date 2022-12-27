@@ -6,16 +6,17 @@ import * as Location from "expo-location";
 function SearchMenu(){
   const [menu, setMenu] = useState('');
   const [data, setData] = useState([]);
+  const [position,setPosition]=useState([]);
   const [initialRegion, setinitialRegion] = useState();
   const [latitude,setLatitude]=useState();
   const [longitude,setLongitude]=useState();
   const [isTyping,setIsTyping]=useState(); // 검색어 한 번에 전달하여 렌더링 횟수 줄이기 위한 변수
-  const handlemenu = menu => {
-    setIsTyping(menu);
+  const handlemenu = item => {
+    setIsTyping(item);
   }
   const ask = async () => {
     const { granted } = await Location.requestForegroundPermissionsAsync();
-    const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({ accuracy: 5 }); //coords를 통해 현재 위치의 좌표 받기
+    const { coords: { latitude,longitude } } = await Location.getCurrentPositionAsync({ accuracy: 5 }); //coords를 통해 현재 위치의 좌표 받기
     setLatitude(latitude);
     setLongitude(longitude);
     setinitialRegion({
@@ -25,12 +26,13 @@ function SearchMenu(){
       longitudeDelta: 0.02
     })
   };
+  const onPress=()=>{
+    setMenu(isTyping);
+  }
   const searchMenu = () => {
     
     console.log("ok")
-    const APIKEY = `a23d2decd15aa7a36ce13403c94408de`;
-    console.log(data);
-
+    let result=[];
     let xcoord = 127.06;
     let ycoord = 37.51;
     let radius = 20000;
@@ -47,14 +49,35 @@ function SearchMenu(){
     //     .finally(() => setLoading(false));
     // }, []);
     console.log(latitude,longitude,radius,menu);//키워드로 검색
-      fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${menu}&y=${Number(latitude)}&x=${Number(longitude)}&radius=${radius}`, {
+      fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?y=${Number(latitude)}&x=${Number(longitude)}&radius=${radius}&query=${menu}`, {
         headers: {
           Authorization: `KakaoAK ${APIKEY}`
         }})
         .then((response) => response.json())
         .then((json) => setData(json))
         .catch((error) => console.error(error))
-       
+      // fetch(`https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${Number(longitude)}&y=${Number(latitude)}`,{
+      //   headers:{
+      //     Authorization: `KakaoAK ${APIKEY}`
+      //   }})
+      //   .then((response) => response.json())
+      //   .then((json) => setPosition(json))
+      //   .catch((error) => console.error(error))
+      //   console.log(position);
+      console.log(data);
+      if(data.documents!==undefined){
+        console.log("in");
+        data.documents.map((item)=>{
+          result.push([item.id,item.place_name, item.place_url,item.category_group_code,item.category_group_name,item.category_name,item.address_name,item.x,item.y])
+        })
+        console.log("result",result);
+        let arr=[];
+        arr=result[0].address_name.split(" ");
+        console.log(result[0].address_name);
+        console.log(arr[1]);
+      }
+     
+
   }
 useEffect(()=>{
   ask();
@@ -69,7 +92,7 @@ useEffect(()=>{
           autoCorrect={false}
           value={isTyping}
           onChangeText={handlemenu}
-          onSubmitEditing={()=>setMenu(isTyping)}
+          onSubmitEditing={onPress}
           multiline={false}
           returnKeyType="search"
         />
