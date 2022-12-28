@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, Text, View, StyleSheet, TextInput } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from "expo-location";
-const APIKEY="a23d2decd15aa7a36ce13403c94408de"
+
 function SearchMenu(){
   const [menu, setMenu] = useState('');
   const [data, setData] = useState([]);
