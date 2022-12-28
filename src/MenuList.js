@@ -34,17 +34,17 @@ const MenuList = ({ item }) => {
 
     return (
         <TouchableOpacity>
-            <Content_name>{item.name}</Content_name>
-            <Content_locate>{item.id}</Content_locate>
+            <Content_name>{item[1]}</Content_name>
+            <Content_locate>{item[2]}</Content_locate>
         </TouchableOpacity>
     );
 };
 
-StationList.defaultProps = {
+MenuList.defaultProps = {
     onPressOut: () => {},
 };
 
-StationList.propTypes = {
+MenuList.propTypes = {
     item: PropTypes.object.isRequired,
     onPressOut : PropTypes.func,
 };

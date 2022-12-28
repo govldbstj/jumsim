@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Text, View, StyleSheet, TextInput } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from "expo-location";
-
+import MatchLocal from './MatchLocal';
 function SearchMenu(){
   const [menu, setMenu] = useState('');
   const [data, setData] = useState([]);
@@ -19,21 +18,21 @@ function SearchMenu(){
   };
   const searchMenu = (item) => {
     let result=[];
-    let radius = 20000;
+    let arr=[];
+    let radius = 8000;
+    console.log("position",latitude,longitude);
       fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${String(item)}&y=${Number(latitude)}&x=${Number(longitude)}&radius=${radius}`, {
         headers: {
           Authorization: `KakaoAK ${APIKEY}`
         }})
         .then((response) => response.json())
         .then((json) => {
-          setData(json),
-          console.log("json",json);
+          // console.log("json",json);
           json.documents.map((item)=>{
             result.push([item.id,item.place_name, item.place_url,item.category_group_code,item.category_group_name,item.category_name,item.address_name,item.x,item.y])
           })
-          console.log("result",result);
-          let arr=[];
-          arr=result[0][6].split(" ");
+          setData(result);
+          // console.log("result",result);
         })
         .catch((error) => console.error(error))
   }
@@ -55,6 +54,12 @@ function SearchMenu(){
           returnKeyType="search"
         />
         <Text>{menu}</Text>
+        {data&& data.map((item,idx)=>{
+          // {console.log("data",data)}
+          return(
+            <MatchLocal result={item}/>
+          )
+        })}
       </View>
     );
 }
