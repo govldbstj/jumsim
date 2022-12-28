@@ -2,87 +2,45 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, Text, View, StyleSheet, TextInput } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from "expo-location";
-
+const APIKEY="a23d2decd15aa7a36ce13403c94408de"
 function SearchMenu(){
   const [menu, setMenu] = useState('');
   const [data, setData] = useState([]);
-  const [position,setPosition]=useState([]);
-  const [initialRegion, setinitialRegion] = useState();
   const [latitude,setLatitude]=useState();
   const [longitude,setLongitude]=useState();
-  const [isTyping,setIsTyping]=useState(); // 검색어 한 번에 전달하여 렌더링 횟수 줄이기 위한 변수
   const handlemenu = item => {
-    setIsTyping(item);
+    setMenu(item);
   }
   const ask = async () => {
     const { granted } = await Location.requestForegroundPermissionsAsync();
     const { coords: { latitude,longitude } } = await Location.getCurrentPositionAsync({ accuracy: 5 }); //coords를 통해 현재 위치의 좌표 받기
     setLatitude(latitude);
     setLongitude(longitude);
-    setinitialRegion({
-      latitude: latitude,
-      longitude: longitude,
-      latitudeDelta: 0.02,
-      longitudeDelta: 0.02
-    })
   };
-  const onPress=()=>{
-    setMenu(isTyping);
-  }
-  const searchMenu = () => {
-    
-    console.log("ok")
+  const searchMenu = (item) => {
     let result=[];
-    let xcoord = 127.06;
-    let ycoord = 37.51;
     let radius = 20000;
-    let cafe = 'CE7';
-
-    // useEffect(() => {
-    //   fetch(`https://dapi.kakao.com/v2/local/search/category.json?category\_group\_code=${cafe}&y=${latitude}&x=${longitude}&radius=${radius}`, {
-    //     headers: {
-    //       Authorization: `KakaoAK ${APIKEY}`
-    //     }})
-    //     .then((response) => response.json())
-    //     .then((json) => setData(json))
-    //     .catch((error) => console.error(error))
-    //     .finally(() => setLoading(false));
-    // }, []);
-    console.log(latitude,longitude,radius,menu);//키워드로 검색
-      fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?y=${Number(latitude)}&x=${Number(longitude)}&radius=${radius}&query=${menu}`, {
+      fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${String(item)}&y=${Number(latitude)}&x=${Number(longitude)}&radius=${radius}`, {
         headers: {
           Authorization: `KakaoAK ${APIKEY}`
         }})
         .then((response) => response.json())
-        .then((json) => setData(json))
-        .catch((error) => console.error(error))
-      // fetch(`https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${Number(longitude)}&y=${Number(latitude)}`,{
-      //   headers:{
-      //     Authorization: `KakaoAK ${APIKEY}`
-      //   }})
-      //   .then((response) => response.json())
-      //   .then((json) => setPosition(json))
-      //   .catch((error) => console.error(error))
-      //   console.log(position);
-      console.log(data);
-      if(data.documents!==undefined){
-        console.log("in");
-        data.documents.map((item)=>{
-          result.push([item.id,item.place_name, item.place_url,item.category_group_code,item.category_group_name,item.category_name,item.address_name,item.x,item.y])
+        .then((json) => {
+          setData(json),
+          console.log("json",json);
+          json.documents.map((item)=>{
+            result.push([item.id,item.place_name, item.place_url,item.category_group_code,item.category_group_name,item.category_name,item.address_name,item.x,item.y])
+          })
+          console.log("result",result);
+          let arr=[];
+          arr=result[0][6].split(" ");
         })
-        console.log("result",result);
-        let arr=[];
-        arr=result[0].address_name.split(" ");
-        console.log(result[0].address_name);
-        console.log(arr[1]);
-      }
-     
-
+        .catch((error) => console.error(error))
   }
-useEffect(()=>{
-  ask();
-  searchMenu();
-},[menu]);
+  useEffect(()=>{
+    ask();
+  },[])
+
   return (
     <View style={styles.view}>
       <Text style = {styles.text}>점심 메뉴 추천</Text>
@@ -90,9 +48,9 @@ useEffect(()=>{
           style={styles.input}
           placeholder="메뉴 키워드를 입력하세요"
           autoCorrect={false}
-          value={isTyping}
+          value={menu}
           onChangeText={handlemenu}
-          onSubmitEditing={onPress}
+          onSubmitEditing={(value)=>searchMenu(value.nativeEvent.text)}
           multiline={false}
           returnKeyType="search"
         />
