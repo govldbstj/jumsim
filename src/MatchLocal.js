@@ -1,19 +1,23 @@
-import { useState, useEffect } from "react";
-import { FlatList, Text, View, StyleSheet, TextInput } from 'react-native';
+import { useState, useEffect, useContext } from "react";
+import { FlatList, Text, View, StyleSheet, Dimensions } from 'react-native';
+import { SafeAreaView } from "react-native-safe-area-context";
+import ResultContext from "./context/Result";
+import MenuList from "./MenuList";
 
+const APIKEY="6270a424d0df4bc99c336e6ebbbd6a6a";
 const renderItem = ({ item }) => {
-  return (
-    <View style={styles.item}>
-      {console.log("item", item.name)}
-      <Text style={styles.title}>{item.name}</Text>
+  return(
+    <View style={styles.view}>
+      <Text>{item.name}</Text>
     </View>
-  )
-}
-const APIKEY = "6270a424d0df4bc99c336e6ebbbd6a6a";
-
-const MatchLocal = ({ result }) => {
-  let indata = [];
-  const [data, setData] = useState([]);
+  );
+};
+function MatchLocal(){
+ 
+let indata=[];
+const {result} =useContext(ResultContext);
+// console.log("context result",result);
+  const [data,setData]=useState([]);
   const match = () => {
     {
       //console.log("result: ", result);
@@ -24,51 +28,43 @@ const MatchLocal = ({ result }) => {
           .then((response) => response.json())
           .then((json) => {
             (json.RESULT != undefined ? "" : indata.push({ "id": json.RegionMnyFacltStus[1].row[0].FRCS_NO, "name": json.RegionMnyFacltStus[1].row[0].CMPNM_NM })),
-              //console.log("indata: ", indata);
-              setData(indata)
+              setData([...indata])
+               //console.log("indata",indata)
           }
           )
       })
     }
   }
-
   useEffect(() => {
     match();
   }, [result]);
 
-useEffect(() => {
-}, [data]);
-
-  return (
-    <View style={styles.view}>
-      {console.log("data",data)}
-      <FlatList
-        //{...console.log("data",data)}
-        keyExtractor={item => String(item.id)}
-        data={data}
-        style={[styles.flatlist]}
-        renderItem={renderItem}
-        windowSize={3}
-      />
-    </View>
-  )
-}
+    return(
+        <SafeAreaView style={styles.container}>
+          <FlatList
+          //{...console.log("flatlist",data)}
+          keyExtractor={item => item.id}
+          data={data}
+          renderItem={renderItem}
+          windowSize={3}
+        />
+        </SafeAreaView>
+    );
+};
 
 const styles = StyleSheet.create({
-  view: {
+  container: {
     alignItems: 'center',
   },
-  flatlist: {
-    flex: 1,
-    width: '100%',
-  },
-  item: {
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
+  view : {
+    alignItems: 'center',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#6495ED',
+    backgroundColor: '#FFFFFF',
+    padding: 7,
+    margin: 3,
+    width: Dimensions.get('window').width-40,
   },
 });
 

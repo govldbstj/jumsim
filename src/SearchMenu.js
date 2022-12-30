@@ -5,7 +5,7 @@ import ResultContext, { ResultConsumer } from '../src/context/Result';
 import { FlatList, Text, View, StyleSheet, TextInput } from 'react-native';
 import * as Location from "expo-location";
 import MatchLocal from './MatchLocal';
-
+import FlagContext from './context/Flag';
 
 const SearchMenu = () => {
 
@@ -14,7 +14,6 @@ const SearchMenu = () => {
   const [result, setResult] = useState([]);
 
   const { dispatch } = useContext(ResultContext);
-
   // const [latitude,setLatitude] = useState();
   // const [longitude,setLongitude] = useState();
 
@@ -42,17 +41,16 @@ const SearchMenu = () => {
     await fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${String(menu)}&y=${Number(latitude)}&x=${Number(longitude)}&radius=${radius}`, {
       headers: {
         Authorization: `KakaoAK ${APIKEY}`
-      }
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        json.documents.map((item) => {
-          tmp.push({ "id": item.id, "name": item.place_name, "link": item.place_url, "group_code": item.category_group_code, "code_name": item.category_group_name, "category_name": item.category_name, "address": item.address_name, "x": item.x, "y": item.y })
+      }})
+    .then((response) => response.json())
+    .then((json) => {
+      json.documents.map((item)=>{
+        tmp.push({"id" : item.id, "name" : item.place_name, "link" : item.place_url, "group_code" : item.category_group_code, "code_name" : item.category_group_name , "category_name" : item.category_name, "address" : item.address_name, "x" : item.x, "y" : item.y })
         }),
-          setData(tmp)
-      })
-      .catch((error) => console.error(error))
-
+      setData(tmp),
+      dispatch(tmp)
+    })
+    .catch((error) => console.error(error))
   }
 
   useEffect(() => {
@@ -61,7 +59,7 @@ const SearchMenu = () => {
 
   return (
     <>
-      <View style={styles.view}>
+    <View style={styles.view}>
         <TextInput
           style={styles.input}
           placeholder="메뉴 키워드를 입력하세요"
@@ -74,9 +72,9 @@ const SearchMenu = () => {
         />
         <Text>{menu}</Text>
       </View>
-      <MatchLocal result={data} />
-    </>
-  );
+      {flag=true?<MatchLocal/>: ""}
+      </>
+    );
 }
 
 const styles = StyleSheet.create({
