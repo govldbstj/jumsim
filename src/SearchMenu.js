@@ -21,12 +21,13 @@ function SearchMenu({menu}){
         .then((response) => response.json())
         .then((json) => {
           // console.log("json",json);
+          let tmp_result=[];
           json.documents.map((item) => {
-            result.push({"id" : item.id, "place_name": item.place_name, "place_url": item.place_url, 
+            tmp_result.push({"id" : item.id, "place_name": item.place_name, "place_url": item.place_url, 
             "category_group_code": item.category_group_code, "category_group_name": item.category_group_name, 
             "category_name": item.category_name, "address_name" : item.address_name, "x": item.x, "y": item.y})
           })
-          setData(result);
+          setData(tmp_result);
         })
         .catch((error) => console.error(error))
   }

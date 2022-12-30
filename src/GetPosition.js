@@ -12,17 +12,13 @@ const GetPosition=()=>{
     const { coords: { latitude,longitude } } = await Location.getCurrentPositionAsync({ accuracy: 5 }); //coords를 통해 현재 위치의 좌표 받기
     setLatitude(latitude);
     setLongitude(longitude);
-    console.log("get position");
+    console.log("get position",latitude,longitude);
     return( dispatch([latitude,longitude]));
-   
   };
   useEffect(()=>{
     ask();
     console.log("here");
   },[])
-  return(
-    <GetMenu/>
-  )
  
 }
 export default GetPosition;

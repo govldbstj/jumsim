@@ -7,8 +7,7 @@ const PositionContext = createContext({
 
 const PositionProvider = ({ children }) => {
   const [position, setPosition] = useState([]);
- // console.log("providers", station.id);
- // console.log("in?", station.name);
+  console.log("in context",position);
 
   const value = { position , dispatch: setPosition };
   return <PositionContext.Provider value={value}>{children}</PositionContext.Provider>;

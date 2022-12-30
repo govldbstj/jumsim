@@ -1,12 +1,17 @@
-import React,{useEffect,useState} from "react";
+import React,{useEffect,useState,useContext} from "react";
 import { FlatList, Text, View, StyleSheet, TextInput } from 'react-native';
+import PositionContext from './context/Position';
 import SearchMenu from "./SearchMenu";
 const GetMenu=()=>{
   const [menu, setMenu] = useState('');
+  const {position}=useContext(PositionContext);
+
   const handlemenu = item => {
     setMenu(item);
   }
   const callComponent=()=>{
+    console.log("callComponent",menu);
+    console.log("callComponent in Position",position);
     return(
       <SearchMenu menu={menu}/>
     )
