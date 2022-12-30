@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
 import { FlatList, Text, View, StyleSheet, TextInput } from 'react-native';
 
-let indata = [];
-
 const renderItem = ({ item }) => {
   return (
-    console.log("item", item),
     <View>
         <Text>{item.name}</Text>
     </View>
@@ -14,6 +11,7 @@ const renderItem = ({ item }) => {
 const APIKEY="6270a424d0df4bc99c336e6ebbbd6a6a";
 
 function MatchLocal({result}){
+let indata=[];
   const [data,setData]=useState([]);
   {result&&result.map((item,idx)=>{
     const name=item.name;
@@ -30,7 +28,7 @@ function MatchLocal({result}){
     return(
       <View>
           <FlatList
-          {...console.log("flatlist",data)}
+          {...console.log("data",data)}
           keyExtractor={item => String(item.id)}
           data={data}
           style={[styles.flatlist]}
