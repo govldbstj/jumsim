@@ -1,19 +1,18 @@
 import { useState, useEffect, useContext } from "react";
 import { FlatList, Text, View, StyleSheet, TextInput } from 'react-native';
+import { SafeAreaView } from "react-native-safe-area-context";
 import ResultContext from "./context/Result";
-
+import MenuList from "./MenuList";
 
 const APIKEY="6270a424d0df4bc99c336e6ebbbd6a6a";
-
+const renderItem = ({ item }) => (
+<MenuList item={item}/>
+);
 function MatchLocal(){
-  const renderItem = ({ item }) => {
-      <View>
-          <Text>{item.name}</Text>
-      </View>
-  }
+ 
 let indata=[];
 const {result} =useContext(ResultContext);
-console.log("context result",result);
+// console.log("context result",result);
   const [data,setData]=useState([]);
   const match = () => {
     {
@@ -25,8 +24,8 @@ console.log("context result",result);
           .then((response) => response.json())
           .then((json) => {
             (json.RESULT != undefined ? "" : indata.push({ "id": json.RegionMnyFacltStus[1].row[0].FRCS_NO, "name": json.RegionMnyFacltStus[1].row[0].CMPNM_NM })),
-              setData(indata),
-              console.log("indata",indata)
+              setData([...indata])
+               console.log("indata",indata)
           }
           )
       })
@@ -37,21 +36,21 @@ console.log("context result",result);
   }, [result]);
 
     return(
-      <View>
+        <SafeAreaView>
           <FlatList
-          keyExtractor={item => String(item.id)}
+          {...console.log("flatlist",data)}
+          keyExtractor={item => item.id}
           data={data}
           style={[styles.flatlist]}
           renderItem={renderItem}
           windowSize={3}
         />
-      </View>
-    )
-}
+        </SafeAreaView>
+    );
+};
 
 const styles = StyleSheet.create({
   flatlist: {
-    flex: 1,
     width: '100%',
   }
 });

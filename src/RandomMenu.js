@@ -15,6 +15,7 @@ const RandomMenu = () => {
         const randomNumber = Math.floor(Math.random() * 10) + 1;
         setNumber(randomNumber);
     }
+    
     return (
         <Container>
             <Button

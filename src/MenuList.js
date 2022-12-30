@@ -8,13 +8,11 @@ import {TouchableOpacity, StyleSheet, Dimensions} from 'react-native';
 const Content_name = styled.Text`
 flex: 1;
 font-size: 16.7px;
-fontFamily:'BinggraeSamanco';
 `;
 
 const Content_locate = styled.Text`
 flex: 1;
 font-size: 14px;
-fontFamily:'BinggraeSamanco';
 `;
 
 const styles = StyleSheet.create({
@@ -31,11 +29,11 @@ const styles = StyleSheet.create({
 });
 
 const MenuList = ({ item }) => {
-
+    console.log("item in MenuList",item);
     return (
         <TouchableOpacity>
-            <Content_name>{item[1]}</Content_name>
-            <Content_locate>{item[2]}</Content_locate>
+            <Content_name>{item.id}</Content_name>
+            <Content_locate>{item.name}</Content_locate>
         </TouchableOpacity>
     );
 };
