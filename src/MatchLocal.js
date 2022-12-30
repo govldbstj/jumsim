@@ -8,11 +8,13 @@ const renderItem=({item})=>{
     </View>
   )
 }
+const APIKEY="6270a424d0df4bc99c336e6ebbbd6a6a";
 
 function MatchLocal({result}){
   const [data,setData]=useState([]);
-  const name=result.name;
-  const arr2=result.address.split(" ");
+  {result&&result.map((item,idx)=>{
+    const name=item.name;
+  const arr2=item.address.split(" ");
   fetch(`https://openapi.gg.go.kr/RegionMnyFacltStus?Key=${APIKEY}&Type=json&pIndex=1&pSize=100&SIGUN_NM=${arr2[1]}&CMPNM_NM=${name}`)
   .then((response) => response.json())
   .then((json)=>{
@@ -20,6 +22,8 @@ function MatchLocal({result}){
      setData(indata)
   }
     )
+  })
+  }
     return(
       <View>
           <FlatList

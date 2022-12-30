@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 
 const PositionContext = createContext({
-  station: [],
+  position: [],
   dispatch: () => {},
 });
 
@@ -10,7 +10,7 @@ const PositionProvider = ({ children }) => {
  // console.log("providers", station.id);
  // console.log("in?", station.name);
 
-  const value = { station , dispatch: setStation };
+  const value = { position , dispatch: setPosition };
   return <PositionContext.Provider value={value}>{children}</PositionContext.Provider>;
 };
 
