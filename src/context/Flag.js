@@ -9,7 +9,7 @@ const FlagProvider = ({ children }) => {
     
     const [flag, setFlag] = useState(false);
 
-    console.log("flag provider", flag);
+    //console.log("flag provider", flag);
 
     const value = { flag , dispatch: setFlag };
     

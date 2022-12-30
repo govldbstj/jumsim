@@ -7,8 +7,8 @@ import * as Location from "expo-location";
 import MatchLocal from './MatchLocal';
 import FlagContext from './context/Flag';
 
-function SearchMenu(){
-  
+const SearchMenu = () => {
+
   const [menu, setMenu] = useState('');
   const [data, setData] = useState([]);
   const [result, setResult] = useState([]);
@@ -20,26 +20,24 @@ function SearchMenu(){
   const ask = async () => {
 
     const { granted } = await Location.requestForegroundPermissionsAsync();
-    const { coords: { latitude,longitude } } = await Location.getCurrentPositionAsync({ accuracy: 5 }); //coords를 통해 현재 위치의 좌표 받기
+    const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({ accuracy: 5 }); //coords를 통해 현재 위치의 좌표 받기
     // setLatitude(latitude);
     // setLongitude(longitude);
 
   };
 
   const handlemenu = text => {
-
     setMenu(text);
-
   }
 
-  const searchMenu = async() => {
+  const searchMenu = async () => {
 
     let radius = 8000;
-  
+
     let tmp = [];
-    let latitude=37.27610495442637;
-    let longitude=127.04264349478763;
-    console.log("position",latitude,longitude);
+    let latitude = 37.27610495442637;
+    let longitude = 127.04264349478763;
+    console.log("position", latitude, longitude);
     await fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${String(menu)}&y=${Number(latitude)}&x=${Number(longitude)}&radius=${radius}`, {
       headers: {
         Authorization: `KakaoAK ${APIKEY}`
@@ -54,8 +52,8 @@ function SearchMenu(){
     })
     .catch((error) => console.error(error))
   }
-        
- useEffect(()=>{
+
+  useEffect(() => {
     ask();
   }, []);
 
@@ -90,12 +88,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   view: {
-      alignItems: 'center'
+    alignItems: 'center'
   },
   text: {
-      fontSize: 30,
-      marginTop: 60,
-      margintBottom: 30
+    fontSize: 30,
+    marginTop: 60,
+    margintBottom: 30
   }
 });
 

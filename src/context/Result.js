@@ -7,11 +7,11 @@ const ResultContext = createContext({
 
 const ResultProvider = ({ children }) => {
     
-    console.log("hh");
+    //console.log("hh");
     
     const [result, setResult] = useState([]);
 
-    console.log("result provider", result);
+    //console.log("result provider", result);
 
     const value = { result , dispatch: setResult };
     
