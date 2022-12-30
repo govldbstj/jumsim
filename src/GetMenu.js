@@ -6,6 +6,11 @@ const GetMenu=()=>{
   const handlemenu = item => {
     setMenu(item);
   }
+  const callComponent=()=>{
+    return(
+      <SearchMenu menu={menu}/>
+    )
+  }
   return (
     <View style={styles.view}>
       <Text style = {styles.text}>점심 메뉴 추천</Text>
@@ -15,7 +20,7 @@ const GetMenu=()=>{
           autoCorrect={false}
           value={menu}
           onChangeText={handlemenu}
-          onSubmitEditing={()=><SearchMenu menu={menu}/>}
+          onSubmitEditing={()=>callComponent()}
           multiline={false}
           returnKeyType="search"
         />  

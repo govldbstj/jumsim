@@ -16,18 +16,26 @@ function SearchMenu({menu}){
       fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${String(menu)}&y=${Number(latitude)}&x=${Number(longitude)}&radius=${radius}`, {
         headers: {
           Authorization: `KakaoAK ${APIKEY}`
-        }})
+        }
+      })
         .then((response) => response.json())
         .then((json) => {
-          json.documents.map((item)=>{
-            result.push({"id":item.id,"name":item.place_name,"link": item.place_url,"group_code":item.category_group_code,"code_name":item.category_group_name,"category_name":item.category_name,"address":item.address_name,"x":item.x,"y":item.y})
-          }),
-          setData(result)
+          // console.log("json",json);
+          json.documents.map((item) => {
+            result.push({"id" : item.id, "place_name": item.place_name, "place_url": item.place_url, 
+            "category_group_code": item.category_group_code, "category_group_name": item.category_group_name, 
+            "category_name": item.category_name, "address_name" : item.address_name, "x": item.x, "y": item.y})
+          })
+          setData(result);
         })
         .catch((error) => console.error(error))
   }
+  useEffect(() => {
+    ask();
+  }, [])
 
   return (
+    console.log("data: ", data),
     <View style={styles.view}>
       {searchMenu}
         {data.length!=0&&<MatchLocal result={data} {...console.log("data",data)}/>}
@@ -45,12 +53,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   view: {
-      alignItems: 'center'
+    alignItems: 'center'
   },
   text: {
-      fontSize: 30,
-      marginTop: 60,
-      margintBottom: 30
+    fontSize: 30,
+    marginTop: 60,
+    margintBottom: 30
   }
 });
 

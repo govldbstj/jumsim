@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FlatList, Text, View, StyleSheet, TextInput } from 'react-native';
-let indata=[];
-const renderItem=({item})=>{
-  return(
+
+let indata = [];
+
+const renderItem = ({ item }) => {
+  return (
+    //console.log("item", item),
     <View>
         <Text>{item.name}</Text>
     </View>
@@ -37,10 +40,12 @@ function MatchLocal({result}){
       </View>
     )
 }
+
 const styles = StyleSheet.create({
   flatlist: {
     flex: 1,
     width: '100%',
   }
 });
+
 export default MatchLocal;
