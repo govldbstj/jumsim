@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { FlatList, Text, View, StyleSheet, Dimensions } from 'react-native';
-import ResultContext from "./context/Result";
+import RandomResultContext from "./context/RandomResult";
 import MenuList from "./MenuList";
 
 const APIKEY="6270a424d0df4bc99c336e6ebbbd6a6a";
@@ -11,16 +11,16 @@ const renderItem = ({ item }) => {
     </View>
   );
 };
-function MatchLocal(){
+function MatchLocalRandom(){
  
 let indata=[];
-const {result} =useContext(ResultContext);
+const {randomResult}=useContext(RandomResultContext);
 // console.log("context result",result);
   const [data,setData]=useState([]);
   const match = () => {
     {
       //console.log("result: ", result);
-      result && result.map((item, idx) => {
+      randomResult && randomResult.map((item, idx) => {
         const name = item.name;
         const arr2 = item.address.split(" ");
         fetch(`https://openapi.gg.go.kr/RegionMnyFacltStus?Key=${APIKEY}&Type=json&pIndex=1&pSize=100&SIGUN_NM=${arr2[1]}&CMPNM_NM=${name}`)
@@ -36,7 +36,7 @@ const {result} =useContext(ResultContext);
   }
   useEffect(() => {
     match();
-  }, [result]);
+  }, [randomResult]);
 
     return(
         <View style={styles.container}>
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MatchLocal;
+export default MatchLocalRandom;

@@ -5,14 +5,13 @@ import ResultContext, { ResultConsumer } from '../src/context/Result';
 import { FlatList, Text, View, StyleSheet, TextInput } from 'react-native';
 import * as Location from "expo-location";
 import MatchLocal from './MatchLocal';
-import FlagContext from './context/Flag';
+import FlagContext from './context/RandomResult';
 
 const SearchMenu = () => {
 
   const [menu, setMenu] = useState('');
   const [data, setData] = useState([]);
   const [result, setResult] = useState([]);
-
   const { dispatch } = useContext(ResultContext);
   // const [latitude,setLatitude] = useState();
   // const [longitude,setLongitude] = useState();
@@ -72,7 +71,7 @@ const SearchMenu = () => {
         />
         <Text>{menu}</Text>
       </View>
-      {flag=true?<MatchLocal/>: ""}
+     <MatchLocal/>
       </>
     );
 }

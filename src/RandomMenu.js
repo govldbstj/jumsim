@@ -2,8 +2,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import { View, StyleSheet, Button, Text } from 'react-native';
 import styled from 'styled-components/native';
 import { random } from './menu_category';
-import MatchLocal from './MatchLocal';
 import * as Location from "expo-location";
+import RandomResultContext from './context/RandomResult';
+import MatchLocalRandom from './MatchLocalRandom';
 
 import ResultContext from '../src/context/Result';
 const APIKEY = `a23d2decd15aa7a36ce13403c94408de`;
@@ -16,7 +17,6 @@ align-items: center;
 const RandomMenu = () => {
     const [menu, setMenu] = useState('');
     const [data, setData] = useState([]);
-
     const getRandomNumber = () => {
         const randomNumber = Math.floor(Math.random() * 11);
         setMenu(random[randomNumber]);
@@ -24,7 +24,7 @@ const RandomMenu = () => {
         searchMenu(random[randomNumber]);
     };
 
-    const { dispatch } = useContext(ResultContext);
+    const { dispatch } = useContext(RandomResultContext);
     // const [latitude,setLatitude] = useState();
     // const [longitude,setLongitude] = useState();
   
@@ -74,7 +74,7 @@ return (
         />
         <Text>{menu}</Text>
         {console.log("data:", data)}
-        {flag = true ? <MatchLocal /> : ""}
+       <MatchLocalRandom/>
     </Container >
 )
 }
