@@ -3,16 +3,14 @@ import { LogBox, FlatList, Text, View, StyleSheet, TextInput } from 'react-nativ
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { NavigationContainer } from '@react-navigation/native';
 import Navigation from './src/Navigation';
-import GetPosition from './src/GetPosition';
 
 export default App = () => {
   LogBox.ignoreAllLogs();
   console.disableYellowBox = true;
   return (
     <NavigationContainer>
-      <GetPosition/>
-      <Navigation />
-    </NavigationContainer>
+    <Navigation/>
+  </NavigationContainer>
   )
 
 };

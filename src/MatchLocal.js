@@ -5,7 +5,7 @@ let indata = [];
 
 const renderItem = ({ item }) => {
   return (
-    //console.log("item", item),
+    console.log("item", item),
     <View>
         <Text>{item.name}</Text>
     </View>
