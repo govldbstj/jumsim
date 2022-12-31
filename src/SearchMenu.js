@@ -36,7 +36,7 @@ const SearchMenu = () => {
     let tmp = [];
     let latitude = 37.27610495442637;
     let longitude = 127.04264349478763;
-    console.log("position", latitude, longitude);
+    //console.log("position", latitude, longitude);
     await fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${String(menu)}&y=${Number(latitude)}&x=${Number(longitude)}&radius=${radius}`, {
       headers: {
         Authorization: `KakaoAK ${APIKEY}`

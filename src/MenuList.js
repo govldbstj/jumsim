@@ -7,9 +7,8 @@ const styles = StyleSheet.create({
 });
 
 const MenuList = ({ item }) => {
-    console.log("item in MenuList",item);
+
     return (
-        console.log("it:", item),
         <View>
             <Text>{item}</Text>
         </View>

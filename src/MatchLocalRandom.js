@@ -4,31 +4,32 @@ import RandomResultContext from "./context/RandomResult";
 import MenuList from "./MenuList";
 
 const APIKEY="6270a424d0df4bc99c336e6ebbbd6a6a";
+
 const renderItem = ({ item }) => {
   return(
     <View style={styles.view}>
-      <Text>{item.name}</Text>
+      <Text style = {styles.in}>{item.name}</Text>
+      <Text style = {styles.detail}>{item.address}</Text>
     </View>
   );
 };
 function MatchLocalRandom(){
  
 let indata=[];
+
 const {randomResult}=useContext(RandomResultContext);
-// console.log("context result",result);
+
   const [data,setData]=useState([]);
   const match = () => {
     {
-      //console.log("result: ", result);
       randomResult && randomResult.map((item, idx) => {
         const name = item.name;
         const arr2 = item.address.split(" ");
         fetch(`https://openapi.gg.go.kr/RegionMnyFacltStus?Key=${APIKEY}&Type=json&pIndex=1&pSize=100&SIGUN_NM=${arr2[1]}&CMPNM_NM=${name}`)
           .then((response) => response.json())
           .then((json) => {
-            (json.RESULT != undefined ? "" : indata.push({ "id": json.RegionMnyFacltStus[1].row[0].FRCS_NO, "name": json.RegionMnyFacltStus[1].row[0].CMPNM_NM })),
+            (json.RESULT != undefined ? "" : indata.push({ "id": json.RegionMnyFacltStus[1].row[0].FRCS_NO, "name": json.RegionMnyFacltStus[1].row[0].CMPNM_NM, "address": json.RegionMnyFacltStus[1].row[0].REFINE_ROADNM_ADDR })),
               setData([...indata])
-               //console.log("indata",indata)
           }
           )
       })
@@ -39,7 +40,7 @@ const {randomResult}=useContext(RandomResultContext);
   }, [randomResult]);
 
     return(
-        <View style={styles.container}>
+        <View style={styles.shadow}>
           <FlatList
           //{...console.log("flatlist",data)}
           keyExtractor={item => item.id}
@@ -57,14 +58,31 @@ const styles = StyleSheet.create({
   },
   view : {
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: 7,
     borderWidth: 1,
-    borderColor: '#6495ED',
+    borderColor: 'gray',
     backgroundColor: '#FFFFFF',
-    padding: 7,
+    padding: 10,
     margin: 3,
     width: Dimensions.get('window').width-40,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
   },
+  in:{
+    fontWeight: 'semibold',
+    fontSize : 17,
+    marginBottom : 5
+  },
+  detail:{
+    fontSize : 13,
+    marginBottom : 7
+  }
 });
 
 export default MatchLocalRandom;
