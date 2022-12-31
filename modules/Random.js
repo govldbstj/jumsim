@@ -41,7 +41,7 @@ const Random = () => {
     let rand = ['피자', '치킨', '햄버거', '한식', '초밥', '커피', '디저트', '떡볶이', '양식', '중식'];
     let food = rand[randnum];
 
-    console.log(food);
+    //console.log(food);
 
 };
 

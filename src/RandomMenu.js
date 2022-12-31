@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, StyleSheet, Button, Text } from 'react-native';
+import { View, StyleSheet, Button, Text, Image, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { random } from './menu_category';
 import * as Location from "expo-location";
@@ -15,12 +15,14 @@ align-items: center;
 `;
 
 const RandomMenu = () => {
+
     const [menu, setMenu] = useState('');
     const [data, setData] = useState([]);
+
     const getRandomNumber = () => {
         const randomNumber = Math.floor(Math.random() * 11);
         setMenu(random[randomNumber]);
-        console.log("random menu",random[randomNumber]);
+        //console.log("random menu",random[randomNumber]);
         searchMenu(random[randomNumber]);
     };
 
@@ -44,8 +46,7 @@ const RandomMenu = () => {
       let tmp = [];
       let latitude = 37.27610495442637;
       let longitude = 127.04264349478763;
-      console.log("menu",item);
-      console.log("position", latitude, longitude);
+
       await fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${String(item)}&y=${Number(latitude)}&x=${Number(longitude)}&radius=${radius}`, {
         headers: {
           Authorization: `KakaoAK ${APIKEY}`
@@ -55,7 +56,7 @@ const RandomMenu = () => {
         json.documents.map((item)=>{
           tmp.push({"id" : item.id, "name" : item.place_name, "link" : item.place_url, "group_code" : item.category_group_code, "code_name" : item.category_group_name , "category_name" : item.category_name, "address" : item.address_name, "x" : item.x, "y" : item.y })
           }),
-          console.log("tmp: ", tmp);
+          //console.log("tmp: ", tmp);
         setData(tmp),
         dispatch(tmp)
       })
@@ -68,18 +69,41 @@ const RandomMenu = () => {
 
 return (
     <Container>
-        <Button
-            title='get random Menu'
-            onPress={() => getRandomNumber()}
-        />
-        <Text>{menu}</Text>
-        {console.log("data:", data)}
+      <Text style = {styles.title}>오늘의 메뉴</Text>
+      <Text style = {styles.in}>클릭해서 정해보아요</Text>
+        <TouchableOpacity onPress={() => getRandomNumber()}>
+        <Image style = {{ width: 120, height: 120}}
+        source = {require('../icons/yummy.png')}/>
+        </TouchableOpacity>
+        <>{ menu.length != 0 ?
+          <><Text style = {styles.top}>{menu} 어떠세요?</Text>
+          <Text style = {styles.detail}>지역화폐 사용이 가능한 내 주변 {menu} 맛집</Text></>
+          : <></>}
+        </>
        <MatchLocalRandom/>
     </Container >
 )
 }
 
 const styles = StyleSheet.create({
+  title:{
+    fontWeight: 'bold',
+    fontSize : 25,
+    margin : 10,
+  },
+  in:{
+    fontSize : 17,
+    marginBottom : 12
+  },
+  top:{
+    fontSize : 20,
+    marginTop : 10
+  },
+  detail:{
+    fontSize : 13,
+    marginTop : 7,
+    marginBottom : 7
+  }
 })
 
 export default RandomMenu;
