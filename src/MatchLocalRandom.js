@@ -6,14 +6,15 @@ import MenuList from "./MenuList";
 const APIKEY="6270a424d0df4bc99c336e6ebbbd6a6a";
 
 const renderItem = ({ item }) => {
-  <MenuList item={item}/>
+  return(
+<MenuList item={item}/>
+  );
+  
 };
 function MatchLocalRandom(){
- 
 let indata=[];
 
 const {randomResult}=useContext(RandomResultContext);
-
   const [data,setData]=useState([]);
   const match = () => {
     {
@@ -37,7 +38,6 @@ const {randomResult}=useContext(RandomResultContext);
     return(
         <View style={styles.shadow}>
           <FlatList
-          //{...console.log("flatlist",data)}
           keyExtractor={item => item.id}
           data={data}
           renderItem={renderItem}

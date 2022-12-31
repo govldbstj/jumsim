@@ -18,6 +18,7 @@ const RandomMenu = () => {
 
     const [menu, setMenu] = useState('');
     const [data, setData] = useState([]);
+    let flag=false;
 
     const getRandomNumber = () => {
         const randomNumber = Math.floor(Math.random() * 11);
@@ -75,12 +76,12 @@ return (
         <Image style = {{ width: 120, height: 120}}
         source = {require('../icons/yummy.png')}/>
         </TouchableOpacity>
-        <>{ menu.length != 0 ?
+        {menu.length!=0?flag=true:flag=false}
+        { menu.length != 0 ?
           <><Text style = {styles.top}>{menu} 어떠세요?</Text>
           <Text style = {styles.detail}>지역화폐 사용이 가능한 내 주변 {menu} 맛집</Text></>
           : <></>}
-        </>
-       <MatchLocalRandom/>
+       {menu.length!=0?<MatchLocalRandom/>:<></>}
     </Container >
 )
 }
