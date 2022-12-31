@@ -39,6 +39,7 @@
     "react-native-date-picker": "^4.2.6",
     "react-native-gesture-handler": "^2.8.0",
     "react-native-html-parser": "^0.1.0",
+    "react-native-hyperlink": "^0.0.22",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-maps": "^0.31.1",
     "react-native-modal-datetime-picker": "^14.0.0",

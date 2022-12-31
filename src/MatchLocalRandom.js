@@ -4,13 +4,9 @@ import RandomResultContext from "./context/RandomResult";
 import MenuList from "./MenuList";
 
 const APIKEY="6270a424d0df4bc99c336e6ebbbd6a6a";
-const renderItem = ({ item }) => {
-  return(
-    <View style={styles.view}>
-      <Text>{item.name}</Text>
-    </View>
-  );
-};
+const renderItem = ({ item }) => (
+    <MenuList item={item}/>
+);
 function MatchLocalRandom(){
  
 let indata=[];
@@ -26,7 +22,7 @@ const {randomResult}=useContext(RandomResultContext);
         fetch(`https://openapi.gg.go.kr/RegionMnyFacltStus?Key=${APIKEY}&Type=json&pIndex=1&pSize=100&SIGUN_NM=${arr2[1]}&CMPNM_NM=${name}`)
           .then((response) => response.json())
           .then((json) => {
-            (json.RESULT != undefined ? "" : indata.push({ "id": json.RegionMnyFacltStus[1].row[0].FRCS_NO, "name": json.RegionMnyFacltStus[1].row[0].CMPNM_NM })),
+            (json.RESULT != undefined ? "" : indata.push({ "id": json.RegionMnyFacltStus[1].row[0].FRCS_NO, "name": json.RegionMnyFacltStus[1].row[0].CMPNM_NM,"link":item.link })),
               setData([...indata])
                //console.log("indata",indata)
           }
