@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Hyperlink from 'react-native-hyperlink';
 import openURL from '../modules/openrUrl';
-import share from '../modules/share';
+import ShareMenu from '../modules/ShareMenu';
 
 const MenuList = ({ item }) => {
 
     return (
+        <>
         <TouchableOpacity
         onPress={()=>openURL(item.link)}
         >
@@ -17,6 +17,9 @@ const MenuList = ({ item }) => {
       <Text style = {styles.detail}>{item.address}</Text>
     </View>
         </TouchableOpacity>
+        <ShareMenu item={item}/>
+        </>
+
     );
 };
 
