@@ -93,11 +93,11 @@ const styles = StyleSheet.create({
   title:{
     fontWeight: 'bold',
     fontSize : 25,
-    margin : 10,
+    margin: 12,
   },
   in:{
     fontSize : 17,
-    marginBottom : 12
+    marginBottom : 18
   },
   top:{
     fontSize : 20,
