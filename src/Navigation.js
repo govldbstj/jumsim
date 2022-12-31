@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 
 const MenuTab = () => {
     return (
-        <Tab.Navigator initialRouteName="점심 메뉴 추천" >
+        <Tab.Navigator initialRouteName="" >
             <Tab.Screen name="검색">
                 {({ navigation }) => <SearchMenu navigation={navigation} />}
             </Tab.Screen>
@@ -26,7 +26,7 @@ const TabNavigation = () => {
     return (
         //console.log("train", trainsto),
         <Stack.Navigator>
-            <Stack.Screen name="점심 메뉴 추천">
+            <Stack.Screen name="오늘의 메뉴 추천">
                 {({ navigation }) => <MenuTab navigation={navigation} />}
             </Stack.Screen>
         </Stack.Navigator>

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Share, View, Button } from 'react-native';
+import { Share, View, Button, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 const ShareMenu = ({item}) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message:`${item.name} ${item.address} ${item.link}`,
+        message:`오늘 메뉴 ${item.name} 어때요? 주소 : ${item.address}, ${item.link}`,
         title:`${item.name} ${item.address} ${item.link}`
       });
       if (result.action === Share.sharedAction) {
@@ -22,10 +22,21 @@ const ShareMenu = ({item}) => {
     }
   };
   return (
-    <View>
-    <Button onPress={onShare} title="Share" />
+    <View style = {styles.icons}>
+    <TouchableOpacity onPress={onShare}>
+        <Image style = {{ width: 20, height: 20}}
+        source = {require('../icons/share.png')}/>
+        </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  icons:{
+    marginTop : 8,
+    marginBottom : 8,
+    alignItems : 'center'
+  }
+})
 
 export default ShareMenu;

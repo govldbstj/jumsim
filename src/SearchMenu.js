@@ -61,7 +61,7 @@ const SearchMenu = () => {
     <View style={styles.view}>
         <TextInput
           style={styles.input}
-          placeholder="메뉴 키워드를 입력하세요"
+          placeholder="오늘은 무슨 메뉴가 좋을까요?"
           autoCorrect={false}
           value={menu}
           onChangeText={handlemenu}
@@ -69,7 +69,6 @@ const SearchMenu = () => {
           multiline={false}
           returnKeyType="search"
         />
-        <Text>{menu}</Text>
       </View>
      <MatchLocal/>
       </>
@@ -79,7 +78,7 @@ const SearchMenu = () => {
 const styles = StyleSheet.create({
   input: {
     height: 42,
-    width: 250,
+    width: 300,
     margin: 12,
     borderWidth: 1,
     borderRadius: 5,

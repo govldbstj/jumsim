@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     borderWidth: 1,
     borderColor: 'gray',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#fffff',
     padding: 10,
     margin: 3,
     width: Dimensions.get('window').width-40,

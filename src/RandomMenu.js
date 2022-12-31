@@ -18,6 +18,7 @@ const RandomMenu = () => {
 
     const [menu, setMenu] = useState('');
     const [data, setData] = useState([]);
+
     let flag=false;
 
     const getRandomNumber = () => {
@@ -39,7 +40,7 @@ const RandomMenu = () => {
       // setLongitude(longitude);
   
     };
-  
+
     const searchMenu = async (item) => {
   
       let radius = 8000;
@@ -71,7 +72,9 @@ const RandomMenu = () => {
 return (
     <Container>
       <Text style = {styles.title}>오늘의 메뉴</Text>
-      <Text style = {styles.in}>클릭해서 정해보아요</Text>
+      { menu.length == 0 ? <Text style = {styles.in}>클릭해서 정해보아요</Text>
+      : <></>
+        }
         <TouchableOpacity onPress={() => getRandomNumber()}>
         <Image style = {{ width: 120, height: 120}}
         source = {require('../icons/yummy.png')}/>
