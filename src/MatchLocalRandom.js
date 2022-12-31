@@ -36,8 +36,8 @@ const {randomResult}=useContext(RandomResultContext);
   }, [randomResult]);
 
     return(
-        <View style={styles.shadow}>
-          <FlatList
+        <View>
+          <FlatList 
           keyExtractor={item => item.id}
           data={data}
           renderItem={renderItem}

@@ -9,15 +9,17 @@ const MenuList = ({ item }) => {
 
     return (
         <>
-        <TouchableOpacity
-        onPress={()=>openURL(item.link)}
-        >
-        <View style={styles.view}>
-      <Text style = {styles.in}>{item.name}</Text>
-      <Text style = {styles.detail}>{item.address}</Text>
-    </View>
-        </TouchableOpacity>
-        <ShareMenu item={item}/>
+        <View style = {styles.left}>
+            <TouchableOpacity onPress={()=>openURL(item.link)}>
+            <View style={styles.view}>
+            <Text style = {styles.in}>{item.name}</Text>
+            <Text style = {styles.detail}>{item.address}</Text>
+            </View>
+            </TouchableOpacity>
+        </View>
+        <View style = {share.right}>
+            <ShareMenu item={item}/>
+        </View>
         </>
 
     );
@@ -32,18 +34,15 @@ MenuList.propTypes = {
     onPressOut : PropTypes.func,
 };
 const styles = StyleSheet.create({
-    container: {
-      alignItems: 'center',
-    },
     view : {
       alignItems: 'center',
-      borderRadius: 7,
+      borderRadius: 10,
       borderWidth: 1,
       borderColor: 'gray',
       backgroundColor: '#FFFFFF',
       padding: 10,
       margin: 3,
-      width: Dimensions.get('window').width-40,
+      width: Dimensions.get('window').width-100,
       shadowColor: "#000",
       shadowOffset: {
         width: 0,
@@ -61,6 +60,18 @@ const styles = StyleSheet.create({
     detail:{
       fontSize : 13,
       marginBottom : 7
+    },
+    left : {
+        flex : 1,
+        flexDirection : 'column',
+        justifyContent: 'flex-start'
     }
   });
+
+const share = StyleSheet.create({
+   right : {
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
+    }, 
+}) 
 export default MenuList;
