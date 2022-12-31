@@ -5,7 +5,8 @@ const ShareMenu = ({item}) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message:`${item.name} ${item.address} ${item.link}`
+        message:`${item.name} ${item.address} ${item.link}`,
+        title:`${item.name} ${item.address} ${item.link}`
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
