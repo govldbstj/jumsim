@@ -7,7 +7,7 @@
     "icon": "./icons/yummy.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./icons/yummy.png",
+      "image": "./icons/gaeggul.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

@@ -5,9 +5,23 @@ import { NavigationContainer } from '@react-navigation/native';
 import Navigation from './src/Navigation';
 import { ResultProvider } from './src/context/Result';
 import { RandomResultProvider } from './src/context/RandomResult';
+import * as SplashScreen from 'expo-splash-screen';
+
 export default App = () => {
+
   LogBox.ignoreAllLogs();
   console.disableYellowBox = true;
+  function sleep(time){
+    return new Promise(
+      resolve=>setTimeout(resolve,time)
+    );
+   }
+ async function delay_splash(){
+  await SplashScreen.preventAutoHideAsync();
+  await sleep(10000);
+  await SplashScreen.hideAsync();
+ }
+  delay_splash();
   return (
     <RandomResultProvider>
     <ResultProvider>
