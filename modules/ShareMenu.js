@@ -24,7 +24,7 @@ const ShareMenu = ({item}) => {
   return (
     <View style = {styles.icons}>
     <TouchableOpacity onPress={onShare}>
-        <Image style = {{ width: 20, height: 20}}
+        <Image style = {{ width: 25, height: 25}}
         source = {require('../icons/share.png')}/>
         </TouchableOpacity>
     </View>
@@ -33,9 +33,9 @@ const ShareMenu = ({item}) => {
 
 const styles = StyleSheet.create({
   icons:{
-    marginTop : 8,
-    marginBottom : 8,
-    alignItems : 'center'
+    alignItems : 'center',
+    justifyContent: 'center',
+    marginLeft: 10,
   }
 })
 
